@@ -1,9 +1,9 @@
 import { CardCampaignInfo } from "./components/cardCampaignInfo";
-import "./styles.css";
+import styles from "./styles.module.scss";
 
 const HomePage = () => {
   return (
-    <div className="container">
+    <div className={styles.container}>
       <CardCampaignInfo />
     </div>
   );

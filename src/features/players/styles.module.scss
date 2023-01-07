@@ -1,0 +1,27 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+.cardHeader {
+    align-items: initial !important;
+}
+
+@media (max-width: 979px) {
+    .container {
+        display: grid !important;
+        column-gap: normal !important;
+        grid-template-columns: 100% !important;
+    }
+
+    h2 {
+        padding: 0px 4px
+    }
+}
+
+.img {
+    width: 200px;
+    height: 180px;
+    object-fit: fill;
+}
