@@ -1,7 +1,5 @@
-import { PageLayoutContainer } from "../../components/pageLayout/styles";
-
 const PlayersPage = () => {
-  return <PageLayoutContainer>PLAYERAAAS</PageLayoutContainer>;
+  return <div>PLAYERAAAS</div>;
 };
 
 export { PlayersPage };

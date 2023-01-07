@@ -1,7 +1,12 @@
-import { PageLayoutContainer } from "../../components/pageLayout/styles";
+import { CardCampaignInfo } from "./components/cardCampaignInfo";
+import "./styles.css";
 
 const HomePage = () => {
-  return <PageLayoutContainer>sahushauhsauhsuahusa</PageLayoutContainer>;
+  return (
+    <div className="container">
+      <CardCampaignInfo />
+    </div>
+  );
 };
 
 export { HomePage };

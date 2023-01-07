@@ -1,6 +1,9 @@
 import { Route, Routes } from "react-router";
 import { MenuDrawer } from "./components/menuDrawer";
-import { PageLayout } from "./components/pageLayout/styles";
+import {
+  PageLayout,
+  PageLayoutContainer,
+} from "./components/pageLayout/styles";
 import { HomePage } from "./features/home";
 import { PlayersPage } from "./features/players";
 
@@ -9,10 +12,12 @@ const App = () => {
     <div className="App">
       <PageLayout>
         <MenuDrawer />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/players" element={<PlayersPage />} />
-        </Routes>
+        <PageLayoutContainer>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/players" element={<PlayersPage />} />
+          </Routes>
+        </PageLayoutContainer>
       </PageLayout>
     </div>
   );

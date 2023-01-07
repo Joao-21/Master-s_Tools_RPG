@@ -11,4 +11,5 @@ export const PageLayout = styled(Box)(() => ({
 export const PageLayoutContainer = styled("div")(() => ({
   marginTop: "64px",
   padding: "16px",
+  width: "100%",
 }));
