@@ -12,6 +12,7 @@ export const AppBarContainer = styled(MuiAppBar, {
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   background: "#856440",
+  color: "#f9f6f2",
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,

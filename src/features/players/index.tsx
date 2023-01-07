@@ -1,13 +1,7 @@
-import { Box } from "@mui/material";
-import { MenuDrawer } from "../../components/menuDrawer";
+import { PageLayoutContainer } from "../../components/pageLayout/styles";
 
 const PlayersPage = () => {
-  return (
-    <Box sx={{ display: "flex" }}>
-      <MenuDrawer />
-      <h1 style={{ marginTop: "100px" }}>PLAYERAAAS</h1>
-    </Box>
-  );
+  return <PageLayoutContainer>PLAYERAAAS</PageLayoutContainer>;
 };
 
 export { PlayersPage };

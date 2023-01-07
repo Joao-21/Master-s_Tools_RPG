@@ -47,7 +47,7 @@ const MenuDrawer = () => {
       <AppBar open={open} handleDrawer={handleDrawerMenu} />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerMenu}>
+          <IconButton style={{ color: "#f9f6f2" }} onClick={handleDrawerMenu}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
@@ -78,6 +78,7 @@ const MenuDrawer = () => {
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
                   }}
+                  style={{ color: "#f9f6f2" }}
                 >
                   <InboxIcon />
                 </ListItemIcon>

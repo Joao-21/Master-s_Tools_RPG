@@ -14,7 +14,7 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
-  background: "#caa982",
+  background: "#856440",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -23,7 +23,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
-  background: "#caa982",
+  background: "#856440",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -58,9 +58,10 @@ interface ListItemInterface extends ListItemProps {
 
 export const ListItemStyled = styled(ListItem)<ListItemInterface>(
   ({ selectedroute }) => ({
-    background: selectedroute ? "red" : "#caa982",
+    color: "white",
+    background: selectedroute ? "#6b5034" : "#856440",
     "&:hover": {
-      background: selectedroute ? "#b96f2c" : "#4e2823",
+      background: selectedroute ? "#5e462d" : "rgba(0, 0, 0, 0.04)",
     },
   })
 );
