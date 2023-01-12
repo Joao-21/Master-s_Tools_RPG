@@ -5,6 +5,7 @@ import {
   PageLayoutContainer,
 } from "./components/pageLayout/styles";
 import { HomePage } from "./features/home";
+import { NpcsPage } from "./features/npcs";
 import { PlayersPage } from "./features/players";
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/players" element={<PlayersPage />} />
+            <Route path="/npcs" element={<NpcsPage />} />
           </Routes>
         </PageLayoutContainer>
       </PageLayout>
