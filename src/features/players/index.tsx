@@ -1,11 +1,14 @@
 import styles from "./styles.module.scss";
 import logo from "../../assets/Monk-Leonardo.jpg";
-import { CharacterCard } from "../../components/characterCard";
+import { CharacterCard } from "./components/characterCard";
+import { AddButton } from "../../components/addButton";
 import CharacterSheet from "../../components/characterSheet";
-import { Fab } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 
 const PlayersPage = () => {
+  const handleOpenModal = () => {
+    console.log("dsadsadsa");
+  };
+
   return (
     <div className={styles.container}>
       <CharacterCard
@@ -24,21 +27,9 @@ const PlayersPage = () => {
         wisdom={2}
         charisma={2}
       />
-      <Fab
-        color="primary"
-        aria-label="add"
-        style={{
-          background: "#433220",
-          color: "white",
-          position: "fixed",
-          right: "2%",
-          zIndex: "1300",
-          top: "22px",
-        }}
-      >
-        <AddIcon />
-      </Fab>
+      <AddButton handleAddButton={handleOpenModal} />
       <CharacterSheet />
+
     </div>
   );
 };

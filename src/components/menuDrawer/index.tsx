@@ -39,6 +39,10 @@ const MenuDrawer = () => {
       name: "Players",
       route: "players",
     },
+    {
+      name: "NPC's",
+      route: "npcs",
+    },
   ];
 
   return (
