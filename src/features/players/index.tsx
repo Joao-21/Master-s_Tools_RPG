@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import logo from "../../assets/Monk-Leonardo.jpg";
 import { CharacterCard } from "../../components/characterCard";
+import CharacterSheet from "../../components/characterSheet";
 import { Fab } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -37,6 +38,7 @@ const PlayersPage = () => {
       >
         <AddIcon />
       </Fab>
+      <CharacterSheet />
     </div>
   );
 };
