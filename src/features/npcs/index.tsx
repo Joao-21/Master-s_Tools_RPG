@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import logo from "../../assets/Monk-Leonardo.jpg";
 import { AddButton } from "../../components/addButton";
-import { NpcCard } from "./npcCard";
+import { NpcCard } from "./components/npcCard";
 
 const NpcsPage = () => {
   const handleOpenModal = () => {
