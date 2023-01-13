@@ -1,12 +1,17 @@
+import * as React from "react";
 import styles from "./styles.module.scss";
 import logo from "../../assets/Monk-Leonardo.jpg";
 import { CharacterCard } from "./components/characterCard";
 import { AddButton } from "../../components/addButton";
+import CharacterSheet from "./components/characterSheet";
 
 const PlayersPage = () => {
+  const [open, setOpen] = React.useState(false);
   const handleOpenModal = () => {
-    console.log("dsadsadsa");
+    setOpen(!open);
+    // console.log("dsadsadsa");
   };
+
 
   return (
     <div className={styles.container}>
@@ -27,6 +32,8 @@ const PlayersPage = () => {
         charisma={2}
       />
       <AddButton handleAddButton={handleOpenModal} />
+      <CharacterSheet open={open} handleClose={handleOpenModal}/>
+
     </div>
   );
 };
