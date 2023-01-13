@@ -12,18 +12,16 @@ import styles from "./styles.module.scss";
 
 interface Props {
   npcName: string;
-  logo: string;
   race: string;
   title: string;
   city: string;
   history: string;
 }
 
-const NpcCard = ({ npcName, logo, race, title, history, city }: Props) => {
+const NpcCard = ({ npcName, race, title, history, city }: Props) => {
   return (
     <Card style={{ boxShadow: "2px 2px 1px #2f3e46", overflow: "auto" }}>
       <Box style={{ display: "flex", flexDirection: "row" }}>
-        <img alt="" src={logo} className={styles.img} />
         <div>
           <CardHeader title={npcName} className={styles.cardHeader} />
           <CardContent
