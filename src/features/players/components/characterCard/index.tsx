@@ -12,9 +12,10 @@ import { PlayerProps } from "../../types";
 
 interface Props {
   playerData: PlayerProps;
+  handleEdit: (event: any) => void;
 }
 
-const CharacterCard = ({ playerData }: Props) => {
+const CharacterCard = ({ playerData, handleEdit }: Props) => {
   const {
     armorClass,
     characterName,
@@ -108,7 +109,13 @@ const CharacterCard = ({ playerData }: Props) => {
         </div>
       </CardContent>
       <CardActions style={{ padding: "0px 16px", justifyContent: "end" }}>
-        <Button style={{ background: "#513c27", color: "white" }}>Edit</Button>
+        <Button
+          style={{ background: "#513c27", color: "white" }}
+          onClick={handleEdit}
+          id={id}
+        >
+          Edit
+        </Button>
         <Button variant="outlined" color="error">
           Delete
         </Button>
