@@ -1,5 +1,4 @@
 import styles from "./styles.module.scss";
-import logo from "../../assets/Monk-Leonardo.jpg";
 import { AddButton } from "../../components/addButton";
 import { NpcCard } from "./components/npcCard";
 
@@ -14,7 +13,6 @@ const NpcsPage = () => {
         npcName="Theodren"
         city="Bom Repouso"
         title="Rei"
-        logo={logo}
         race="Humano"
         history="This is the king"
       />
