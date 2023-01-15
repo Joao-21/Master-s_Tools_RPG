@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Stack from "@mui/material/Stack";
 import { Divider, Typography } from "@mui/material";
@@ -14,16 +13,16 @@ interface Props {
   open: boolean;
   handleClose: () => void;
   handleSubmit: () => void;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   playerData: PlayerProps;
+  setPlayerData: (player: PlayerProps) => void;
 }
 
 export default function CharacterSheet({
   open,
   handleClose,
   handleSubmit,
-  handleChange,
   playerData,
+  setPlayerData,
 }: Props) {
   const {
     armorClass,
@@ -32,7 +31,6 @@ export default function CharacterSheet({
     className,
     constitution,
     dexterity,
-    id,
     intelligence,
     level,
     ownerName,
@@ -41,6 +39,13 @@ export default function CharacterSheet({
     totalhp,
     wisdom,
   } = playerData;
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setPlayerData({ ...playerData, [name]: value });
+  };
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -59,10 +64,6 @@ export default function CharacterSheet({
             value={ownerName}
             variant="standard"
           />
-          {/* <Button component="label" startIcon={<AddPhotoAlternateIcon />}>
-            Upload
-            <input hidden accept="image/*" multiple type="file" />
-          </Button> */}
           <Stack direction="row" spacing={2}>
             <div>
               <TextField

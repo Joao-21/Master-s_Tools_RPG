@@ -9,13 +9,20 @@ import {
 import { Box } from "@mui/system";
 import styles from "./styles.module.scss";
 import { PlayerProps } from "../../types";
+import { useState } from "react";
+import CharacterSheet from "../characterSheet";
+import axios from "axios";
+import { ConfirmationDialog } from "../../../../components/confirmationDialog";
 
 interface Props {
   playerData: PlayerProps;
-  handleEdit: (event: any) => void;
+  setLoadingStatus: (status: string) => void;
 }
 
-const CharacterCard = ({ playerData, handleEdit }: Props) => {
+const CharacterCard = ({ playerData, setLoadingStatus }: Props) => {
+  const [openEditPlayer, setOpenEditPlayer] = useState(false);
+  const [playerToEdit, setPlayerToEdit] = useState(playerData);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const {
     armorClass,
     characterName,
@@ -33,7 +40,30 @@ const CharacterCard = ({ playerData, handleEdit }: Props) => {
     wisdom,
   } = playerData;
 
-  console.log("id", id);
+  const toggleModal = () => {
+    setOpenEditPlayer(!openEditPlayer);
+  };
+
+  const toggleDeleteModal = () => {
+    setOpenDeleteModal(!openDeleteModal);
+  };
+
+  const putPlayerAPI = async (player: PlayerProps) => {
+    try {
+      axios.put(
+        `https://rpgprojectlabs.azurewebsites.net/character/${player.id}/`,
+        player
+      );
+      setLoadingStatus("idle");
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const handleSubmit = () => {
+    putPlayerAPI(playerToEdit);
+    toggleModal();
+  };
 
   return (
     <Card
@@ -111,15 +141,26 @@ const CharacterCard = ({ playerData, handleEdit }: Props) => {
       <CardActions style={{ padding: "0px 16px", justifyContent: "end" }}>
         <Button
           style={{ background: "#513c27", color: "white" }}
-          onClick={handleEdit}
+          onClick={toggleModal}
           id={id}
         >
           Edit
         </Button>
-        <Button variant="outlined" color="error">
+        <Button variant="outlined" color="error" onClick={toggleDeleteModal}>
           Delete
         </Button>
       </CardActions>
+      <CharacterSheet
+        open={openEditPlayer}
+        handleClose={toggleModal}
+        handleSubmit={handleSubmit}
+        setPlayerData={setPlayerToEdit}
+        playerData={playerToEdit}
+      />
+      <ConfirmationDialog
+        open={openDeleteModal}
+        handleDialog={toggleDeleteModal}
+      />
     </Card>
   );
 };

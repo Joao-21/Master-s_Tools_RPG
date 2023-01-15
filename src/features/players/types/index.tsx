@@ -5,12 +5,12 @@ export interface PlayerProps {
   className: string;
   constitution: number;
   dexterity: number;
-  id: string;
+  id?: string;
   intelligence: number;
   level: number;
   ownerName: string;
   race: string;
-  registrationDate: string;
+  registrationDate?: string;
   strength: number;
   totalhp: number;
   wisdom: number;
