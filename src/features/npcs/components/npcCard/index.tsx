@@ -5,14 +5,14 @@ import {
   Typography,
   CardHeader,
   CardActions,
-  Button,
 } from "@mui/material";
 import axios from "axios";
-import { Box } from "@mui/system";
 import { ConfirmationDialog } from "../../../../components/confirmationDialog";
 import NpcSheet from "../npcSheet";
 import { NpcProps } from "../../types";
-import styles from "./styles.module.scss";
+import globalStyles from "../../../../styles/card.module.scss";
+import { SecondaryButton } from "../../../../components/secondaryButton";
+import { MainButton } from "../../../../components/mainButton";
 
 interface Props {
   npcData: NpcProps;
@@ -26,7 +26,7 @@ const NpcCard = ({ npcData, setLoadingStatus }: Props) => {
 
   const { id, name, race, title, history, city } = npcData;
 
-  const toggleModal = () => {
+  const toggleEditModal = () => {
     setOpenEditNpc(!openEditNpc);
   };
 
@@ -42,17 +42,17 @@ const NpcCard = ({ npcData, setLoadingStatus }: Props) => {
       );
       setLoadingStatus("idle");
     } catch (err: any) {
+      setLoadingStatus("error");
       console.log(err.message);
     }
   };
 
   const deleteNpcAPI = async (id: string) => {
     try {
-      await axios.delete(
-        `https://rpgprojectlabs.azurewebsites.net/npc/${id}`
-      );
+      await axios.delete(`https://rpgprojectlabs.azurewebsites.net/npc/${id}`);
       setLoadingStatus("idle");
     } catch (err: any) {
+      setLoadingStatus("error");
       console.log(err.message);
     }
   };
@@ -63,48 +63,35 @@ const NpcCard = ({ npcData, setLoadingStatus }: Props) => {
 
   const handleSubmit = () => {
     putNpcAPI(npcToEdit);
-    toggleModal();
+    toggleEditModal();
   };
 
   return (
-    <Card style={{ boxShadow: "2px 2px 1px #2f3e46", overflow: "auto" }}>
-      <Box style={{ display: "flex", flexDirection: "row" }}>
-        <div>
-          <CardHeader title={name} className={styles.cardHeader} />
-          <CardContent
-            style={{
-              paddingBottom: "8px",
-              display: "flex",
-              flexDirection: "column",
-              paddingLeft: "16px",
-              paddingRight: "16px",
-            }}
-          >
-            <Typography sx={{ fontSize: 14 }} gutterBottom>
-              <b>Race:</b> {race}
-            </Typography>
-            <Typography sx={{ fontSize: 14 }} gutterBottom>
-              <b>Title:</b> {title}
-            </Typography>
-            <Typography sx={{ fontSize: 14 }} gutterBottom>
-              <b>City:</b> {city}
-            </Typography>
-            <Typography sx={{ fontSize: 14 }}>
-              <b>History:</b> {history}
-            </Typography>
-          </CardContent>
-        </div>
-      </Box>
-      <CardActions style={{ padding: "5px", justifyContent: "end" }}>
-        <Button 
-          style={{ background: "#513c27", color: "white" }}
-          onClick={toggleModal} id={id}
-        >Edit</Button>
-        <Button variant="outlined" color="error" onClick={toggleDeleteModal} >Delete</Button>
+    <Card className={globalStyles.card_container}>
+      <div>
+        <CardHeader title={name} className={globalStyles.cardHeader} />
+        <CardContent className={globalStyles.card_content}>
+          <Typography sx={{ fontSize: 14 }} gutterBottom>
+            <b>Race:</b> {race}
+          </Typography>
+          <Typography sx={{ fontSize: 14 }} gutterBottom>
+            <b>Title:</b> {title}
+          </Typography>
+          <Typography sx={{ fontSize: 14 }} gutterBottom>
+            <b>City:</b> {city}
+          </Typography>
+          <Typography sx={{ fontSize: 14 }}>
+            <b>History:</b> {history}
+          </Typography>
+        </CardContent>
+      </div>
+      <CardActions className={globalStyles.card_actions}>
+        <SecondaryButton buttonName="Delete" handleClick={toggleDeleteModal} />
+        <MainButton buttonName="Edit" handleClick={toggleEditModal} />
       </CardActions>
       <NpcSheet
         open={openEditNpc}
-        handleClose={toggleModal}
+        handleClose={toggleEditModal}
         handleSubmit={handleSubmit}
         setNpcData={setNpcToEdit}
         npcData={npcToEdit}

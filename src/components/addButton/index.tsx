@@ -1,5 +1,6 @@
 import { Fab } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import styles from "./styles.module.scss";
 
 interface Props {
   handleAddButton: () => void;
@@ -8,16 +9,8 @@ interface Props {
 const AddButton = ({ handleAddButton }: Props) => {
   return (
     <Fab
-      color="primary"
       aria-label="add"
-      style={{
-        background: "#433220",
-        color: "white",
-        position: "fixed",
-        right: "2%",
-        zIndex: "1300",
-        top: "22px",
-      }}
+      className={styles.fab_container}
       onClick={handleAddButton}
     >
       <AddIcon />
