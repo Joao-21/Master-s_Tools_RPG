@@ -85,7 +85,10 @@ const NpcCard = ({ npcData, setLoadingStatus }: Props) => {
           </Typography>
         </CardContent>
       </div>
-      <CardActions className={globalStyles.card_actions}>
+      <CardActions
+        className={globalStyles.card_actions}
+        style={{ marginBottom: "16px" }}
+      >
         <SecondaryButton buttonName="Delete" handleClick={toggleDeleteModal} />
         <MainButton buttonName="Edit" handleClick={toggleEditModal} />
       </CardActions>

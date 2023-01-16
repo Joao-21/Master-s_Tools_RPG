@@ -4,6 +4,8 @@ import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { AppBarContainer } from "./styles";
+import { useLocation } from "react-router";
+import { CapitalizeFirstLetter } from "../../utils";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -11,6 +13,9 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const AppBar = ({ open, handleDrawer }: AppBarProps) => {
+  const location = useLocation();
+  const pathname = location.pathname.replace("/", "");
+
   return (
     <AppBarContainer position="fixed" open={open}>
       <Toolbar>
@@ -27,7 +32,7 @@ const AppBar = ({ open, handleDrawer }: AppBarProps) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div">
-          Master's Tools - RPG
+          {CapitalizeFirstLetter(pathname) || "Master's Tools"} - RPG
         </Typography>
       </Toolbar>
     </AppBarContainer>

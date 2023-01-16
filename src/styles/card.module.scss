@@ -2,7 +2,7 @@
     box-shadow: 2px 2px 1px #2f3e46;
     overflow: auto;
     display: grid;
-    grid-template-rows: 80% 20%;
+    grid-template-rows: 85% 15%;
 }
 
 .cardHeader {
@@ -11,14 +11,15 @@
 }
 
 .card_content {
-    padding: 8px 16px;
+    padding: 8px 16px !important;
     display: flex;
     flex-direction: column;
 }
 
 .card_actions {
-    padding: 0px 16px;
+    padding: 0px 16px !important;
     justify-content: end;
+    margin-bottom: 8px
 }
 
 .character_container {
