@@ -9,9 +9,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 interface Props {
   open: boolean;
   handleDialog: () => void;
+  handleConfirmAction: () => void;
 }
 
-const ConfirmationDialog = ({ open, handleDialog }: Props) => {
+const ConfirmationDialog = ({
+  open,
+  handleDialog,
+  handleConfirmAction,
+}: Props) => {
   return (
     <Dialog
       open={open}
@@ -27,7 +32,7 @@ const ConfirmationDialog = ({ open, handleDialog }: Props) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleDialog}>Cancel</Button>
-        <Button onClick={handleDialog} autoFocus>
+        <Button onClick={handleConfirmAction} autoFocus>
           Yes
         </Button>
       </DialogActions>

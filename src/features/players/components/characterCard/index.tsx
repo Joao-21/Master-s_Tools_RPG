@@ -50,14 +50,29 @@ const CharacterCard = ({ playerData, setLoadingStatus }: Props) => {
 
   const putPlayerAPI = async (player: PlayerProps) => {
     try {
-      axios.put(
-        `https://rpgprojectlabs.azurewebsites.net/character/${player.id}/`,
+      await axios.put(
+        `https://rpgprojectlabs.azurewebsites.net/character/${player.id}`,
         player
       );
       setLoadingStatus("idle");
     } catch (err: any) {
       console.log(err.message);
     }
+  };
+
+  const deletePlayerAPI = async (id: string) => {
+    try {
+      await axios.delete(
+        `https://rpgprojectlabs.azurewebsites.net/character/${id}`
+      );
+      setLoadingStatus("idle");
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const handleDeletePlayer = () => {
+    if (id) deletePlayerAPI(id);
   };
 
   const handleSubmit = () => {
@@ -160,6 +175,7 @@ const CharacterCard = ({ playerData, setLoadingStatus }: Props) => {
       <ConfirmationDialog
         open={openDeleteModal}
         handleDialog={toggleDeleteModal}
+        handleConfirmAction={handleDeletePlayer}
       />
     </Card>
   );
