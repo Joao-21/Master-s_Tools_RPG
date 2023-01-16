@@ -6,6 +6,7 @@ import CharacterSheet from "./components/characterSheet";
 import axios from "axios";
 import { PlayerProps } from "./types";
 import { initialStatePlayer } from "./types/initialState";
+import { LoadingIcon } from "../../components/loadingIcon";
 
 const PlayersPage = () => {
   const [open, setOpen] = React.useState(false);
@@ -55,7 +56,7 @@ const PlayersPage = () => {
   }, [loading]);
 
   return loading === "loading" ? (
-    <div>Loading...</div>
+    <LoadingIcon />
   ) : (
     <div className={styles.container}>
       {playersData.map((player) => {

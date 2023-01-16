@@ -6,6 +6,7 @@ import NpcSheet from "./components/npcSheet";
 import axios from "axios";
 import { NpcProps } from "./types";
 import { initialStateNpc } from "./types/initialState";
+import { LoadingIcon } from "../../components/loadingIcon";
 
 const NpcsPage = () => {
   const [open, setOpen] = useState(false);
@@ -35,12 +36,10 @@ const NpcsPage = () => {
   const postNewNpcAPI = async (newNpc: NpcProps) => {
     try {
       setLoading("loading");
-      await axios.post(
-        "https://rpgprojectlabs.azurewebsites.net/npc",
-        newNpc
-      );
+      await axios.post("https://rpgprojectlabs.azurewebsites.net/npc", newNpc);
       setLoading("idle");
     } catch (err: any) {
+      setLoading("error");
       console.log(err.message);
     }
   };
@@ -55,18 +54,13 @@ const NpcsPage = () => {
   }, [loading]);
 
   return loading === "loading" ? (
-    <div>Loading...</div>
+    <LoadingIcon />
   ) : (
     <div className={styles.container}>
       {npcsData.map((npc) => {
-        return(
-          <NpcCard
-            npcData={npc}
-            key={npc.id}
-            setLoadingStatus={setLoading}
-          />
+        return (
+          <NpcCard npcData={npc} key={npc.id} setLoadingStatus={setLoading} />
         );
-
       })}
       <AddButton handleAddButton={toggleModal} />
       <NpcSheet

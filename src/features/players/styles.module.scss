@@ -8,10 +8,6 @@
     }
 }
 
-.cardHeader {
-    align-items: initial !important;
-}
-
 @media (max-width: 979px) {
     .container {
         display: grid !important;
@@ -22,10 +18,4 @@
     h2 {
         padding: 0px 4px
     }
-}
-
-.img {
-    width: 200px;
-    height: 180px;
-    object-fit: fill;
 }

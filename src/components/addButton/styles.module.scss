@@ -1,0 +1,10 @@
+@import 'src/styles/variables';
+
+.fab_container {
+    background: $button_primary !important;
+    color: $text_primary !important;
+    position: fixed !important;
+    right: 2% !important;
+    z-index: 1300 !important;
+    top: 22px !important;
+}

@@ -58,7 +58,7 @@ interface ListItemInterface extends ListItemProps {
 
 export const ListItemStyled = styled(ListItem)<ListItemInterface>(
   ({ selectedroute }) => ({
-    color: "white",
+    color: "#f9f6f2",
     background: selectedroute ? "#6b5034" : "#856440",
     "&:hover": {
       background: selectedroute ? "#5e462d" : "rgba(0, 0, 0, 0.04)",
