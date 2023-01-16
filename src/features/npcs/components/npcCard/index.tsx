@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,23 +7,70 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
+import axios from "axios";
 import { Box } from "@mui/system";
+import { ConfirmationDialog } from "../../../../components/confirmationDialog";
+import NpcSheet from "../npcSheet";
+import { NpcProps } from "../../types";
 import styles from "./styles.module.scss";
 
 interface Props {
-  npcName: string;
-  race: string;
-  title: string;
-  city: string;
-  history: string;
+  npcData: NpcProps;
+  setLoadingStatus: (status: string) => void;
 }
 
-const NpcCard = ({ npcName, race, title, history, city }: Props) => {
+const NpcCard = ({ npcData, setLoadingStatus }: Props) => {
+  const [openEditNpc, setOpenEditNpc] = useState(false);
+  const [npcToEdit, setNpcToEdit] = useState(npcData);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
+  const { id, name, race, title, history, city } = npcData;
+
+  const toggleModal = () => {
+    setOpenEditNpc(!openEditNpc);
+  };
+
+  const toggleDeleteModal = () => {
+    setOpenDeleteModal(!openDeleteModal);
+  };
+
+  const putNpcAPI = async (npc: NpcProps) => {
+    try {
+      await axios.put(
+        `https://rpgprojectlabs.azurewebsites.net/npc/${npc.id}`,
+        npc
+      );
+      setLoadingStatus("idle");
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const deleteNpcAPI = async (id: string) => {
+    try {
+      await axios.delete(
+        `https://rpgprojectlabs.azurewebsites.net/npc/${id}`
+      );
+      setLoadingStatus("idle");
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const handleDeleteNpc = () => {
+    if (id) deleteNpcAPI(id);
+  };
+
+  const handleSubmit = () => {
+    putNpcAPI(npcToEdit);
+    toggleModal();
+  };
+
   return (
     <Card style={{ boxShadow: "2px 2px 1px #2f3e46", overflow: "auto" }}>
       <Box style={{ display: "flex", flexDirection: "row" }}>
         <div>
-          <CardHeader title={npcName} className={styles.cardHeader} />
+          <CardHeader title={name} className={styles.cardHeader} />
           <CardContent
             style={{
               paddingBottom: "8px",
@@ -48,10 +95,25 @@ const NpcCard = ({ npcName, race, title, history, city }: Props) => {
           </CardContent>
         </div>
       </Box>
-      <CardActions style={{ padding: "0px", justifyContent: "end" }}>
-        <Button>Edit</Button>
-        <Button>Delete</Button>
+      <CardActions style={{ padding: "5px", justifyContent: "end" }}>
+        <Button 
+          style={{ background: "#513c27", color: "white" }}
+          onClick={toggleModal} id={id}
+        >Edit</Button>
+        <Button variant="outlined" color="error" onClick={toggleDeleteModal} >Delete</Button>
       </CardActions>
+      <NpcSheet
+        open={openEditNpc}
+        handleClose={toggleModal}
+        handleSubmit={handleSubmit}
+        setNpcData={setNpcToEdit}
+        npcData={npcToEdit}
+      />
+      <ConfirmationDialog
+        open={openDeleteModal}
+        handleDialog={toggleDeleteModal}
+        handleConfirmAction={handleDeleteNpc}
+      />
     </Card>
   );
 };
