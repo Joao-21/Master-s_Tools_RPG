@@ -15,6 +15,7 @@ const PlayersPage = () => {
 
   const toggleModal = () => {
     setOpen(!open);
+    setNewPlayer(initialStatePlayer);
   };
 
   const getPlayersListAPI = async () => {
@@ -33,8 +34,9 @@ const PlayersPage = () => {
 
   const postNewPlayerAPI = async (newPlayer: PlayerProps) => {
     try {
-      axios.post(
-        "https://rpgprojectlabs.azurewebsites.net/character/",
+      setLoading("loading");
+      await axios.post(
+        "https://rpgprojectlabs.azurewebsites.net/character",
         newPlayer
       );
       setLoading("idle");
