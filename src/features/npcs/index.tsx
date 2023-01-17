@@ -65,7 +65,7 @@ const NpcsPage = () => {
       <AddButton handleAddButton={toggleModal} />
       <NpcSheet
         open={open}
-        handleClose={toggleModal}
+        toggleForm={toggleModal}
         handleSubmit={handleSubmit}
         setNpcData={setNewNpc}
         npcData={newNpc}

@@ -14,4 +14,4 @@ export interface PlayerProps {
   strength: number;
   totalhp: number;
   wisdom: number;
-}
+};

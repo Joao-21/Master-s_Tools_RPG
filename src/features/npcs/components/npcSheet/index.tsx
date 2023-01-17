@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -6,29 +7,52 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Divider } from "@mui/material";
 import { NpcProps } from "../../types";
-import { SecondaryButton } from "../../../../components/secondaryButton";
-import { MainButton } from "../../../../components/mainButton";
 
 interface Props {
   open: boolean;
-  handleClose: () => void;
+  toggleForm: () => void;
   handleSubmit: () => void;
   npcData: NpcProps;
   setNpcData: (npc: NpcProps) => void;
 }
 
-export default function CharacterSheet({
+export default function NpcSheet({
   open,
-  handleClose,
+  toggleForm,
   handleSubmit,
   npcData,
   setNpcData,
 }: Props) {
   const { name, race, title, city, history } = npcData;
+  const initialStateNpcValidation = {
+    name: race !== "" ? true : null,
+    race: race !== "" ? true : null,
+    title: title !== "" ? true : null,
+    city: city !== "" ? true : null,
+    history: history !== "" ? true : null,
+  };
+
+  const [isFieldValid, setIsFieldValid] = React.useState(
+    initialStateNpcValidation
+  );
+  const enabledSubmitButton = Object.values(isFieldValid).every(
+    (field) => field === true
+  );
+
+  const resetForm = () => {
+    setIsFieldValid(initialStateNpcValidation);
+  };
+
+  const handleClose = () => {
+    toggleForm();
+    resetForm();
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
-    const value = event.target.value;
+    let value = event.target.value;
+    value = value.slice(0, 140);
+    setIsFieldValid({ ...isFieldValid, [name]: value !== "" });
     setNpcData({ ...npcData, [name]: value });
   };
 
@@ -40,6 +64,8 @@ export default function CharacterSheet({
         <DialogContent>
           <TextField
             autoFocus
+            required
+            error={isFieldValid.name === false}
             name="name"
             margin="dense"
             id="npc-name"
@@ -51,7 +77,8 @@ export default function CharacterSheet({
             variant="standard"
           />
           <TextField
-            autoFocus
+            required
+            error={isFieldValid.race === false}
             name="race"
             margin="dense"
             id="npc-race"
@@ -63,7 +90,6 @@ export default function CharacterSheet({
             variant="standard"
           />
           <TextField
-            autoFocus
             name="title"
             margin="dense"
             id="npc-title"
@@ -75,8 +101,9 @@ export default function CharacterSheet({
             variant="standard"
           />
           <TextField
-            autoFocus
+            required
             name="city"
+            error={isFieldValid.city === false}
             margin="dense"
             id="npc-city"
             label="City"
@@ -87,8 +114,9 @@ export default function CharacterSheet({
             variant="standard"
           />
           <TextField
-            autoFocus
+            required
             name="history"
+            error={isFieldValid.history === false}
             margin="dense"
             id="npc-history"
             label="History"
@@ -100,8 +128,16 @@ export default function CharacterSheet({
           />
         </DialogContent>
         <DialogActions>
-          <SecondaryButton buttonName="Cancel" handleClick={handleClose} />
-          <MainButton buttonName="Save" handleClick={handleSubmit} />
+          <Button variant="outlined" color="error" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            disabled={!enabledSubmitButton}
+            onClick={handleSubmit}
+          >
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

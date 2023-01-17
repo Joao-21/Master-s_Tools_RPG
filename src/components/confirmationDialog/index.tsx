@@ -1,10 +1,9 @@
+import { Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { SecondaryButton } from "../secondaryButton";
-import { MainButton } from "../mainButton";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -34,8 +33,12 @@ const ConfirmationDialog = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <SecondaryButton buttonName="Cancel" handleClick={handleDialog} />
-        <MainButton buttonName="Yes" handleClick={handleConfirmAction} />
+        <Button variant="outlined" color="error" onClick={handleDialog}>
+          Cancel
+        </Button>
+        <Button variant="contained" onClick={handleConfirmAction}>
+          Yes
+        </Button>
       </DialogActions>
     </Dialog>
   );
