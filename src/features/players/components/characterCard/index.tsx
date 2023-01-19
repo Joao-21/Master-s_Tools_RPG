@@ -11,7 +11,7 @@ import globalStyles from "../../../../styles/card.module.scss";
 import { PlayerProps } from "../../types";
 import { useState } from "react";
 import CharacterSheet from "../characterSheet";
-import axios from "axios";
+import Service from "../../../../crud/services";
 import { ConfirmationDialog } from "../../../../components/confirmationDialog";
 
 interface Props {
@@ -49,23 +49,20 @@ const CharacterCard = ({ playerData, setLoadingStatus }: Props) => {
   };
 
   const putPlayerAPI = async (player: PlayerProps) => {
-    try {
-      await axios.put(
-        `https://rpgprojectlabs.azurewebsites.net/character/${player.id}`,
-        player
-      );
-      setLoadingStatus("idle");
-    } catch (err: any) {
-      setLoadingStatus("error");
-      console.log(err.message);
+    if (player.id) {
+      try {
+        await Service.updatePlayer(player.id, player);
+        setLoadingStatus("idle");
+      } catch (err: any) {
+        setLoadingStatus("error");
+        console.log(err.message);
+      }
     }
   };
 
   const deletePlayerAPI = async (id: string) => {
     try {
-      await axios.delete(
-        `https://rpgprojectlabs.azurewebsites.net/character/${id}`
-      );
+      await Service.removePlayer(id);
       setLoadingStatus("idle");
     } catch (err: any) {
       setLoadingStatus("error");

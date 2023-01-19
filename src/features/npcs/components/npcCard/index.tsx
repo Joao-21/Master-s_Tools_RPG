@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardActions,
 } from "@mui/material";
-import axios from "axios";
+import Service from "../../../../crud/services";
 import { ConfirmationDialog } from "../../../../components/confirmationDialog";
 import NpcSheet from "../npcSheet";
 import { NpcProps } from "../../types";
@@ -35,21 +35,20 @@ const NpcCard = ({ npcData, setLoadingStatus }: Props) => {
   };
 
   const putNpcAPI = async (npc: NpcProps) => {
-    try {
-      await axios.put(
-        `https://rpgprojectlabs.azurewebsites.net/npc/${npc.id}`,
-        npc
-      );
-      setLoadingStatus("idle");
-    } catch (err: any) {
-      setLoadingStatus("error");
-      console.log(err.message);
+    if (npc.id) {
+      try {
+        await Service.updateNpc(npc.id, npc);
+        setLoadingStatus("idle");
+      } catch (err: any) {
+        setLoadingStatus("error");
+        console.log(err.message);
+      }
     }
   };
 
   const deleteNpcAPI = async (id: string) => {
     try {
-      await axios.delete(`https://rpgprojectlabs.azurewebsites.net/npc/${id}`);
+      await Service.removeNpc(id);
       setLoadingStatus("idle");
     } catch (err: any) {
       setLoadingStatus("error");

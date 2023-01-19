@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { AddButton } from "../../components/addButton";
 import { NpcCard } from "./components/npcCard";
 import NpcSheet from "./components/npcSheet";
-import axios from "axios";
+import Service from "../../crud/services";
 import { NpcProps } from "./types";
 import { initialStateNpc } from "./types/initialState";
 import { LoadingIcon } from "../../components/loadingIcon";
@@ -22,10 +22,7 @@ const NpcsPage = () => {
   const getNpcsListAPI = async () => {
     try {
       setLoading("loading");
-      const res = await axios.get(
-        `https://rpgprojectlabs.azurewebsites.net/npc`,
-        {}
-      );
+      const res = await Service.getAllNpcs(); 
       setLoading("loaded");
       setNpcsData(res.data.content);
     } catch (err) {
@@ -36,7 +33,7 @@ const NpcsPage = () => {
   const postNewNpcAPI = async (newNpc: NpcProps) => {
     try {
       setLoading("loading");
-      await axios.post("https://rpgprojectlabs.azurewebsites.net/npc", newNpc);
+      await Service.createNpc(newNpc);
       setLoading("idle");
     } catch (err: any) {
       setLoading("error");
