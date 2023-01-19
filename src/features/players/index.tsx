@@ -3,10 +3,10 @@ import styles from "./styles.module.scss";
 import { CharacterCard } from "./components/characterCard";
 import { AddButton } from "../../components/addButton";
 import CharacterSheet from "./components/characterSheet";
-import axios from "axios";
 import { PlayerProps } from "./types";
 import { initialStatePlayer } from "./types/initialState";
 import { LoadingIcon } from "../../components/loadingIcon";
+import Service from "../../crud/services";
 
 const PlayersPage = () => {
   const [open, setOpen] = React.useState(false);
@@ -22,10 +22,7 @@ const PlayersPage = () => {
   const getPlayersListAPI = async () => {
     try {
       setLoading("loading");
-      const res = await axios.get(
-        `https://rpgprojectlabs.azurewebsites.net/character`,
-        {}
-      );
+      const res = await Service.getAllPlayers();
       setLoading("loaded");
       setPlayersData(res.data.content);
     } catch (err) {
@@ -36,10 +33,7 @@ const PlayersPage = () => {
   const postNewPlayerAPI = async (newPlayer: PlayerProps) => {
     try {
       setLoading("loading");
-      await axios.post(
-        "https://rpgprojectlabs.azurewebsites.net/character",
-        newPlayer
-      );
+      await Service.createPlayer(newPlayer);
       setLoading("idle");
     } catch (err: any) {
       console.log(err.message);
