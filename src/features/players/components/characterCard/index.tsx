@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardContent,
   Typography,
@@ -12,8 +13,6 @@ import { useState } from "react";
 import CharacterSheet from "../characterSheet";
 import axios from "axios";
 import { ConfirmationDialog } from "../../../../components/confirmationDialog";
-import { MainButton } from "../../../../components/mainButton";
-import { SecondaryButton } from "../../../../components/secondaryButton";
 
 interface Props {
   playerData: PlayerProps;
@@ -142,12 +141,20 @@ const CharacterCard = ({ playerData, setLoadingStatus }: Props) => {
         </CardContent>
       </div>
       <CardActions className={globalStyles.card_actions}>
-        <SecondaryButton buttonName="Delete" handleClick={toggleDeleteModal} />
-        <MainButton buttonName="Edit" handleClick={toggleEditModal} />
+        <Button variant="outlined" color="error" onClick={toggleDeleteModal}>
+          Delete
+        </Button>
+        <Button
+          variant="contained"
+          // disabled={!enabledSubmitButton}
+          onClick={toggleEditModal}
+        >
+          Edit
+        </Button>
       </CardActions>
       <CharacterSheet
         open={openEditPlayer}
-        handleClose={toggleEditModal}
+        toggleForm={toggleEditModal}
         handleSubmit={handleEditPlayer}
         setPlayerData={setPlayerToEdit}
         playerData={playerToEdit}

@@ -1,5 +1,6 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -7,12 +8,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Stack from "@mui/material/Stack";
 import { Divider, Typography } from "@mui/material";
 import { PlayerProps } from "../../types";
-import { MainButton } from "../../../../components/mainButton";
-import { SecondaryButton } from "../../../../components/secondaryButton";
 
 interface Props {
   open: boolean;
-  handleClose: () => void;
+  toggleForm: () => void;
   handleSubmit: () => void;
   playerData: PlayerProps;
   setPlayerData: (player: PlayerProps) => void;
@@ -20,7 +19,7 @@ interface Props {
 
 export default function CharacterSheet({
   open,
-  handleClose,
+  toggleForm,
   handleSubmit,
   playerData,
   setPlayerData,
@@ -41,9 +40,47 @@ export default function CharacterSheet({
     wisdom,
   } = playerData;
 
+  const initialStatePlayerValidation = {
+    armorClass: true,
+    characterName: characterName !== "" ? true : null,
+    charisma: true,
+    className: className !== "" ? true : null,
+    constitution: true,
+    dexterity: true,
+    intelligence: true,
+    level: true,
+    ownerName: ownerName !== "" ? true : null,
+    race: race !== "" ? true : null,
+    strength: true,
+    totalhp: true,
+    wisdom: true,
+  };
+  const [isFieldValid, setIsFieldValid] = React.useState(
+    initialStatePlayerValidation
+  );
+  const enabledSubmitButton = Object.values(isFieldValid).every(
+    (field) => field === true
+  );
+
+  const resetForm = () => {
+    setIsFieldValid(initialStatePlayerValidation);
+  };
+
+  const handleClose = () => {
+    toggleForm();
+    resetForm();
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
-    const value = event.target.value;
+    let value = event.target.value;
+    if (event.target.type === "number") {
+      value = Math.max(parseInt(value), 0).toString();
+      setIsFieldValid({ ...isFieldValid, [name]: parseInt(value) >= 0 });
+    } else if (event.target.type === "text") {
+      value = value.slice(0, 20);
+      setIsFieldValid({ ...isFieldValid, [name]: value !== "" });
+    }
     setPlayerData({ ...playerData, [name]: value });
   };
 
@@ -55,6 +92,8 @@ export default function CharacterSheet({
         <DialogContent>
           <TextField
             autoFocus
+            required
+            error={isFieldValid.ownerName === false}
             name="ownerName"
             margin="dense"
             id="player-name"
@@ -68,8 +107,9 @@ export default function CharacterSheet({
           <Stack direction="row" spacing={2}>
             <div>
               <TextField
-                autoFocus
                 name="characterName"
+                required
+                error={isFieldValid.characterName === false}
                 margin="dense"
                 id="character-name"
                 label="Name of the character"
@@ -82,8 +122,9 @@ export default function CharacterSheet({
             </div>
             <div>
               <TextField
-                autoFocus
                 name="className"
+                required
+                error={isFieldValid.className === false}
                 margin="dense"
                 id="character-class"
                 label="Class"
@@ -98,8 +139,9 @@ export default function CharacterSheet({
           <Stack direction="row" spacing={2}>
             <div>
               <TextField
-                autoFocus
                 name="race"
+                required
+                error={isFieldValid.race === false}
                 margin="dense"
                 id="character-race"
                 label="Race"
@@ -112,7 +154,6 @@ export default function CharacterSheet({
             </div>
             <div>
               <TextField
-                autoFocus
                 name="level"
                 margin="dense"
                 id="character-level"
@@ -128,7 +169,6 @@ export default function CharacterSheet({
           <Stack direction="row" spacing={2}>
             <div>
               <TextField
-                autoFocus
                 name="totalhp"
                 margin="dense"
                 id="character-totalhp"
@@ -142,7 +182,6 @@ export default function CharacterSheet({
             </div>
             <div>
               <TextField
-                autoFocus
                 name="armorClass"
                 margin="dense"
                 id="character-totalac"
@@ -162,7 +201,6 @@ export default function CharacterSheet({
           <Stack direction="row" spacing={3}>
             <div>
               <TextField
-                autoFocus
                 name="strength"
                 margin="dense"
                 id="character-strength"
@@ -177,7 +215,6 @@ export default function CharacterSheet({
             </div>
             <div>
               <TextField
-                autoFocus
                 name="dexterity"
                 margin="dense"
                 id="character-dexterity"
@@ -192,7 +229,6 @@ export default function CharacterSheet({
             </div>
             <div>
               <TextField
-                autoFocus
                 name="constitution"
                 margin="dense"
                 id="character-constitution"
@@ -209,7 +245,6 @@ export default function CharacterSheet({
           <Stack direction="row" spacing={3}>
             <div>
               <TextField
-                autoFocus
                 name="intelligence"
                 margin="dense"
                 id="character-intelligence"
@@ -224,7 +259,6 @@ export default function CharacterSheet({
             </div>
             <div>
               <TextField
-                autoFocus
                 name="wisdom"
                 margin="dense"
                 id="character-wisdom"
@@ -239,7 +273,6 @@ export default function CharacterSheet({
             </div>
             <div>
               <TextField
-                autoFocus
                 name="charisma"
                 margin="dense"
                 id="character-charisma"
@@ -255,8 +288,16 @@ export default function CharacterSheet({
           </Stack>
         </DialogContent>
         <DialogActions>
-          <SecondaryButton buttonName="Cancel" handleClick={handleClose} />
-          <MainButton buttonName="Save" handleClick={handleSubmit} />
+          <Button variant="outlined" color="error" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            disabled={!enabledSubmitButton}
+            onClick={handleSubmit}
+          >
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

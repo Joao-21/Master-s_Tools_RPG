@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Button,
   Card,
   CardContent,
   Typography,
@@ -11,8 +12,7 @@ import { ConfirmationDialog } from "../../../../components/confirmationDialog";
 import NpcSheet from "../npcSheet";
 import { NpcProps } from "../../types";
 import globalStyles from "../../../../styles/card.module.scss";
-import { SecondaryButton } from "../../../../components/secondaryButton";
-import { MainButton } from "../../../../components/mainButton";
+
 
 interface Props {
   npcData: NpcProps;
@@ -89,12 +89,20 @@ const NpcCard = ({ npcData, setLoadingStatus }: Props) => {
         className={globalStyles.card_actions}
         style={{ marginBottom: "16px" }}
       >
-        <SecondaryButton buttonName="Delete" handleClick={toggleDeleteModal} />
-        <MainButton buttonName="Edit" handleClick={toggleEditModal} />
+        <Button variant="outlined" color="error" onClick={toggleDeleteModal}>
+          Delete
+        </Button>
+        <Button
+          variant="contained"
+          // disabled={!enabledSubmitButton}
+          onClick={toggleEditModal}
+        >
+          Edit
+        </Button>
       </CardActions>
       <NpcSheet
         open={openEditNpc}
-        handleClose={toggleEditModal}
+        toggleForm={toggleEditModal}
         handleSubmit={handleSubmit}
         setNpcData={setNpcToEdit}
         npcData={npcToEdit}

@@ -71,7 +71,7 @@ const PlayersPage = () => {
       <AddButton handleAddButton={toggleModal} />
       <CharacterSheet
         open={open}
-        handleClose={toggleModal}
+        toggleForm={toggleModal}
         handleSubmit={handleSubmit}
         setPlayerData={setNewPlayer}
         playerData={newPlayer}
